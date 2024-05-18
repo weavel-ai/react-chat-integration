@@ -10,7 +10,7 @@ You must create a project in Weavel and get the API key to use this script.
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/weavel-ai/react-chat-integration/logger.min.js"
+  src="https://cdn.jsdelivr.net/gh/weavel-ai/react-chat-integration@latest/logger.min.js"
   api-key="< Your Weavel API key here >"
 ></script>
 ```
@@ -35,7 +35,7 @@ You must create a project in Weavel and get the API key to use this script.
 </script>
 <!-- Add the snippet below to integrate Weavel analytics -->
 <script
-  src="https://cdn.jsdelivr.net/gh/weavel-ai/react-chat-integration/logger.min.js"
+  src="https://cdn.jsdelivr.net/gh/weavel-ai/react-chat-integration@latest/logger.min.js"
   api-key="< Your Weavel API key here >"
 ></script>
 ```

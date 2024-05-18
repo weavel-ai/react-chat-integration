@@ -5,7 +5,8 @@ A simple script to integrate [@voiceflow/react-chat](https://github.com/voiceflo
 ## Installation
 
 Simply add a simple script tag to your HTML file where you have included the `@voiceflow/react-chat` package.
-You must create a project in Weavel and get the API key to use this script.
+You must create a project in Weavel and get the API key to use this script.  
+[Create a project on Weavel](https://analytics.weavel.ai)
 
 ```html
 <script

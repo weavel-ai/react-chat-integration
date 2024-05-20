@@ -48,6 +48,6 @@ You might also want to log **track events** (e.g. button clicks) or **user prope
 Download the functions from this repo:
 
 - [Identify User](https://raw.githubusercontent.com/weavel-ai/react-chat-integration/main/voiceflow-functions/identify-user.json)
-- [Track Event](https://raw.githubusercontent.com/weavel-ai/react-chat-integration/main/voiceflow-functions/track-event.json)
+- [Track Event](https://raw.githubusercontent.com/weavel-ai/react-chat-integration/main/voiceflow-functions/log-track-event.json)
 
 Read more about the Weavel-Voiceflow integration [here](https://weavel.ai/docs/platform-integrations/voiceflow).

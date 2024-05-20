@@ -5,8 +5,9 @@ A simple script to integrate [@voiceflow/react-chat](https://github.com/voiceflo
 ## Installation
 
 Simply add a simple script tag to your HTML file where you have included the `@voiceflow/react-chat` package.
-You must create a project in Weavel and get the API key to use this script.  
-[Create a project on Weavel](https://analytics.weavel.ai)
+You must create a project in Weavel and get the API key to use this script. ([Create a project on Weavel](https://analytics.weavel.ai))
+
+This setup will enable **automatic logging of all user/bot messages** to Weavel. Every 'session' between users and your bot will be logged as a separate 'trace' on Weavel.
 
 ```html
 <script
@@ -15,7 +16,7 @@ You must create a project in Weavel and get the API key to use this script.
 ></script>
 ```
 
-## Example
+### Example
 
 ```html
 <!-- Your existing @voiceflow/react-chat installation -->
@@ -39,3 +40,14 @@ You must create a project in Weavel and get the API key to use this script.
   api-key="< Your Weavel API key here >"
 ></script>
 ```
+
+## Advanced Usage
+
+You might also want to log **track events** (e.g. button clicks) or **user properties** (e.g. name, email) to Weavel. We provide Voiceflow functions to do this - you can import and use them in your project.
+
+Download the functions from this repo:
+
+- [Identify User](https://raw.githubusercontent.com/weavel-ai/react-chat-integration/main/voiceflow-functions/identify-user.json)
+- [Track Event](https://raw.githubusercontent.com/weavel-ai/react-chat-integration/main/voiceflow-functions/track-event.json)
+
+Read more about the Weavel-Voiceflow integration [here](https://weavel.ai/docs/platform-integrations/voiceflow).

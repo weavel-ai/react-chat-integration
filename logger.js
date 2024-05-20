@@ -16,6 +16,13 @@ function setStorageItem(key, value) {
   localStorage.setItem(`${LOCAL_STORAGE_PREFIX}${key}`, value);
 }
 
+function createTrace() {
+  const traceUUID = generateUUID();
+  setStorageItem("traceUUID", traceUUID);
+  setStorageItem("loggedMessages", 0);
+  return traceUUID;
+}
+
 function logMessage({
   userId,
   traceUUID,
@@ -76,38 +83,41 @@ function parseMessages(messages) {
 }
 
 window.addEventListener("message", (event) => {
-  const data = JSON.parse(event.data);
-  if ("type" in data) {
-    const eventName = data.type.split("voiceflow:")[1];
-    if (eventName === "interact") {
-      let traceUUID = getStorageItem("traceUUID");
-      if (data.payload.action.type === "launch") {
-        traceUUID = generateUUID();
-        setStorageItem("traceUUID", traceUUID);
-        setStorageItem("loggedMessages", 0);
-      }
-      const userId = data.payload.session.userID;
-      const allMessages = data.payload.session.turns;
-      const messagesToLog = allMessages.slice(
-        getStorageItem("loggedMessages") || 0
-      );
-      messagesToLog.forEach((msg) => {
-        let content;
-        if (msg.message) {
-          content = msg.message;
-        } else if (msg.messages) {
-          content = parseMessages(msg.messages);
+  try {
+    if (typeof event.data !== "string") return;
+    const data = JSON.parse(event.data);
+    if ("type" in data) {
+      const eventName = data.type.split("voiceflow:")[1];
+      if (eventName === "interact") {
+        let traceUUID = getStorageItem("traceUUID");
+        if (data.payload.action.type === "launch") {
+          traceUUID = createTrace();
         }
-        logMessage({
-          userId,
-          traceUUID,
-          traceDataId: msg.id,
-          role: msg.type,
-          content,
-          timestamp: new Date(msg.timestamp).toISOString(),
+        const userId = data.payload.session.userID;
+        const allMessages = data.payload.session.turns;
+        const messagesToLog = allMessages.slice(
+          getStorageItem("loggedMessages") || 0
+        );
+        messagesToLog.forEach((msg) => {
+          let content;
+          if (msg.message) {
+            content = msg.message;
+          } else if (msg.messages) {
+            content = parseMessages(msg.messages);
+          }
+          logMessage({
+            userId,
+            traceUUID,
+            traceDataId: msg.id,
+            role: msg.type,
+            content,
+            timestamp: new Date(msg.timestamp).toISOString(),
+          });
         });
-      });
-      setStorageItem("loggedMessages", allMessages.length);
+        setStorageItem("loggedMessages", allMessages.length);
+      }
     }
+  } catch (error) {
+    console.log("Error parsing message", error, event.data);
   }
 });

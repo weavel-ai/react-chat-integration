@@ -1,0 +1,58 @@
+{
+  "functions": [
+    {
+      "id": "6648884e6f57a6062d5e6241",
+      "name": "(Weavel) Log Track Event",
+      "createdByID": 941639,
+      "folderID": "664b595b3f6b850fc83bfb92",
+      "code": "export default async function main(args) {\n  const {weavelApiKey, name, user_id } = args.inputVars;\n\n  const weavelEndpoint = \"https://api.weavel.ai\"\n\n  // Set up the headers for the Weavel API request\n  const headers = {\n    'Authorization': `Bearer ${weavelApiKey}`,\n    'Content-Type': 'application/json'\n  };\n\n  try {\n    // Fetch the user's most recent trace ID\n    const traceRes = await fetch(`${weavelEndpoint}/traces/recent/${user_id}`, {\n      method: 'GET',\n      headers: headers,\n    });\n\n    if (!traceRes.ok){\n      throw new Error(`HTTP error when fetching recent trace! status: ${traceRes.status}`)\n    }\n\n    // return {\n    //   trace: [{\n    //     type: 'debug',\n    //     payload: {\n    //       message: JSON.stringify(traceRes)\n    //     }\n    //   }]\n    // }\n\n    const trace = traceRes.json\n\n    if (trace === null) {\n      throw new Error (\"Trace doesn't exist for this user\")\n    }\n    \n    const payload = {\n      name,\n      user_id,\n      trace_id: trace.trace_id,\n      // properties // optional\n    }\n    // Send the event to Weavel\n    const logRes = await fetch(`${weavelEndpoint}/capture/track_event`, {\n      method: 'POST',\n      headers: headers,\n      body: JSON.stringify(payload)\n    });\n \n    // Check logRes status to confirm event was sent\n    if (!logRes.ok) {\n      throw new Error(`HTTP error when logging track event! status: ${logRes.status}`);\n    }\n \n    // Return a success message\n    return {\n      next: {\n        path: 'success'\n      },\n      trace: [{\n        type: 'debug',\n        payload: {\n          message: \"Track event successfully sent to Weavel.\"\n        }\n      }]\n    };\n \n  } catch (error) {\n    // Handle errors in sending the event\n    return {\n      next: {\n        path: 'fail'\n      },\n      trace: [{\n        type: 'debug',\n        payload: {\n          message: `Failed to send event to Weavel: ${error.message}`\n        }\n      }]\n    };\n  }\n}",
+      "image": null,
+      "description": "",
+      "createdAt": "2024-05-18T10:51:59.000Z",
+      "updatedAt": "2024-05-20T14:08:28.000Z",
+      "updatedByID": 941639
+    }
+  ],
+  "functionPaths": [
+    {
+      "id": "664889516f57a6062d5e624b",
+      "name": "fail",
+      "label": "",
+      "functionID": "6648884e6f57a6062d5e6241",
+      "createdAt": "2024-05-18T10:56:17.294Z"
+    },
+    {
+      "id": "664889576f57a6062d5e624c",
+      "name": "success",
+      "label": "",
+      "functionID": "6648884e6f57a6062d5e6241",
+      "createdAt": "2024-05-18T10:56:23.181Z"
+    }
+  ],
+  "functionVariables": [
+    {
+      "id": "6648892d6f57a6062d5e624a",
+      "name": "weavelApiKey",
+      "type": "input",
+      "functionID": "6648884e6f57a6062d5e6241",
+      "description": "",
+      "createdAt": "2024-05-18T10:55:41.782Z"
+    },
+    {
+      "id": "6648887e6f57a6062d5e6245",
+      "name": "user_id",
+      "type": "input",
+      "functionID": "6648884e6f57a6062d5e6241",
+      "description": "",
+      "createdAt": "2024-05-18T10:52:46.710Z"
+    },
+    {
+      "id": "664888856f57a6062d5e6247",
+      "name": "name",
+      "type": "input",
+      "functionID": "6648884e6f57a6062d5e6241",
+      "description": "Name of event",
+      "createdAt": "2024-05-18T10:52:53.069Z"
+    }
+  ]
+}

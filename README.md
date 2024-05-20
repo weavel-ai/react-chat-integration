@@ -45,9 +45,14 @@ This setup will enable **automatic logging of all user/bot messages** to Weavel.
 
 You might also want to log **track events** (e.g. button clicks) or **user properties** (e.g. name, email) to Weavel. We provide Voiceflow functions to do this - you can import and use them in your project.
 
-Download the functions from this repo:
+Download the functions below, then import them into your Voiceflow project.
 
-- [Identify User](https://raw.githubusercontent.com/weavel-ai/react-chat-integration/main/voiceflow-functions/identify-user.json)
-- [Track Event](https://raw.githubusercontent.com/weavel-ai/react-chat-integration/main/voiceflow-functions/log-track-event.json)
+- [Identify User](https://github.com/weavel-ai/react-chat-integration/blob/main/voiceflow-functions/identify-user.json)
+- [Track Event](https://github.com/weavel-ai/react-chat-integration/blob/main/voiceflow-functions/log-track-event.json)
+
+Or if you prefer, you can copy the code from the links below and create the functions manually in your Voiceflow project.
+
+- [Identify User](https://github.com/weavel-ai/react-chat-integration/blob/main/voiceflow-functions/snippets/identify-user.js)
+- [Track Event](https://github.com/weavel-ai/react-chat-integration/blob/main/voiceflow-functions/snippets/log-track-event.js)
 
 Read more about the Weavel-Voiceflow integration [here](https://weavel.ai/docs/platform-integrations/voiceflow).
